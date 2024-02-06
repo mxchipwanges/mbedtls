@@ -139,9 +139,11 @@ extern "C" {
 #if defined(MBEDTLS_PLATFORM_MEMORY)
 #if defined(MBEDTLS_PLATFORM_FREE_MACRO) && \
     defined(MBEDTLS_PLATFORM_CALLOC_MACRO)
+11111111111111111111111111111111
 #define mbedtls_free       MBEDTLS_PLATFORM_FREE_MACRO
 #define mbedtls_calloc     MBEDTLS_PLATFORM_CALLOC_MACRO
 #else
+22222222222222222222222222222222222
 /* For size_t */
 #include <stddef.h>
 extern void *mbedtls_calloc( size_t n, size_t size );
