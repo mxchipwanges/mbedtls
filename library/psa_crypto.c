@@ -290,8 +290,10 @@ psa_status_t mbedtls_to_psa_error( int ret )
         case MBEDTLS_ERR_RSA_PUBLIC_FAILED:
         case MBEDTLS_ERR_RSA_PRIVATE_FAILED:
             return( PSA_ERROR_CORRUPTION_DETECTED );
-        case MBEDTLS_ERR_RSA_VERIFY_FAILED:
+        case MBEDTLS_ERR_RSA_VERIFY_FAILED:{
+            printf("\n*************MBEDTLS_ERR_RSA_VERIFY_FAILED at %s:%d: %s\n", __FILE__, __LINE__, __FUNCTION__);
             return( PSA_ERROR_INVALID_SIGNATURE );
+        }
         case MBEDTLS_ERR_RSA_OUTPUT_TOO_LARGE:
             return( PSA_ERROR_BUFFER_TOO_SMALL );
         case MBEDTLS_ERR_RSA_RNG_FAILED:

@@ -109,8 +109,10 @@ int mbedtls_pk_error_from_psa_rsa( psa_status_t status )
             return( MBEDTLS_ERR_RSA_OUTPUT_TOO_LARGE );
         case PSA_ERROR_INSUFFICIENT_ENTROPY:
             return( MBEDTLS_ERR_RSA_RNG_FAILED );
-        case PSA_ERROR_INVALID_SIGNATURE:
+        case PSA_ERROR_INVALID_SIGNATURE:{
+            printf("\n*************MBEDTLS_ERR_RSA_VERIFY_FAILED at %s:%d: %s\n", __FILE__, __LINE__, __FUNCTION__);
             return( MBEDTLS_ERR_RSA_VERIFY_FAILED );
+        }
         case PSA_ERROR_INVALID_PADDING:
             return( MBEDTLS_ERR_RSA_INVALID_PADDING );
         default:
@@ -182,8 +184,10 @@ static int rsa_verify_wrap( void *ctx, mbedtls_md_type_t md_alg,
         return( MBEDTLS_ERR_PK_BAD_INPUT_DATA );
 #endif /* SIZE_MAX > UINT_MAX */
 
-    if( sig_len < rsa_len )
+    if( sig_len < rsa_len ){
+        printf("\n*************MBEDTLS_ERR_RSA_VERIFY_FAILED at %s:%d: %s\n", __FILE__, __LINE__, __FUNCTION__);
         return( MBEDTLS_ERR_RSA_VERIFY_FAILED );
+    }
 
     /* mbedtls_pk_write_pubkey_der() expects a full PK context;
      * re-construct one to make it happy */
@@ -236,8 +240,10 @@ static int rsa_verify_wrap( void *ctx, mbedtls_md_type_t md_alg,
         return( MBEDTLS_ERR_PK_BAD_INPUT_DATA );
 #endif /* SIZE_MAX > UINT_MAX */
 
-    if( sig_len < rsa_len )
+    if( sig_len < rsa_len ){
+        printf("\n*************MBEDTLS_ERR_RSA_VERIFY_FAILED at %s:%d: %s\n", __FILE__, __LINE__, __FUNCTION__);
         return( MBEDTLS_ERR_RSA_VERIFY_FAILED );
+    }
 
     if( ( ret = mbedtls_rsa_pkcs1_verify( rsa, md_alg,
                                           (unsigned int) hash_len,

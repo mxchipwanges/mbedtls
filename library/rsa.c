@@ -1017,6 +1017,7 @@ int mbedtls_rsa_private( mbedtls_rsa_context *ctx,
                                           &ctx->N, &ctx->RN ) );
     if( mbedtls_mpi_cmp_mpi( &C, &I ) != 0 )
     {
+        printf("\n*************MBEDTLS_ERR_RSA_VERIFY_FAILED at %s:%d: %s\n", __FILE__, __LINE__, __FUNCTION__);
         ret = MBEDTLS_ERR_RSA_VERIFY_FAILED;
         goto cleanup;
     }
@@ -2070,8 +2071,10 @@ int mbedtls_rsa_rsassa_pss_verify_ext( mbedtls_rsa_context *ctx,
     if( ret != 0 )
         return( ret );
 
-    if( memcmp( hash_start, result, hlen ) != 0 )
+    if( memcmp( hash_start, result, hlen ) != 0 ){
+        printf("\n*************MBEDTLS_ERR_RSA_VERIFY_FAILED at %s:%d: %s\n", __FILE__, __LINE__, __FUNCTION__);
         return( MBEDTLS_ERR_RSA_VERIFY_FAILED );
+    }
 
     return( 0 );
 }
@@ -2151,6 +2154,7 @@ int mbedtls_rsa_rsassa_pkcs1_v15_verify( mbedtls_rsa_context *ctx,
     if( ( ret = mbedtls_ct_memcmp( encoded, encoded_expected,
                                               sig_len ) ) != 0 )
     {
+        printf("\n*************MBEDTLS_ERR_RSA_VERIFY_FAILED at %s:%d: %s\n", __FILE__, __LINE__, __FUNCTION__);
         ret = MBEDTLS_ERR_RSA_VERIFY_FAILED;
         goto cleanup;
     }

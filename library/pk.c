@@ -542,8 +542,10 @@ int mbedtls_pk_verify_ext( mbedtls_pk_type_t type, const void *options,
     else
 #endif
     {
-        if( sig_len < mbedtls_pk_get_len( ctx ) )
+        if( sig_len < mbedtls_pk_get_len( ctx ) ){
+            printf("\n*************MBEDTLS_ERR_RSA_VERIFY_FAILED at %s:%d: %s\n", __FILE__, __LINE__, __FUNCTION__);
             return( MBEDTLS_ERR_RSA_VERIFY_FAILED );
+        }
 
         ret = mbedtls_rsa_rsassa_pss_verify_ext( mbedtls_pk_rsa( *ctx ),
                                                  md_alg, (unsigned int) hash_len, hash,
