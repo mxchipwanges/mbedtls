@@ -106,8 +106,10 @@ int mbedtls_mpi_grow( mbedtls_mpi *X, size_t nblimbs )
 
     if( X->n < nblimbs )
     {
-        if( ( p = (mbedtls_mpi_uint*)mbedtls_calloc( nblimbs, ciL ) ) == NULL )
+        if( ( p = (mbedtls_mpi_uint*)mbedtls_calloc( nblimbs, ciL ) ) == NULL ){
+            printf("\n************** %s:%d %s mbedtls_calloc(%ld, %ld) failed !!!\n", __FILE__, __LINE__, __FUNCTION__, nblimbs, ciL);
             return( MBEDTLS_ERR_MPI_ALLOC_FAILED );
+        }
 
         if( X->p != NULL )
         {
@@ -149,8 +151,10 @@ int mbedtls_mpi_shrink( mbedtls_mpi *X, size_t nblimbs )
     if( i < nblimbs )
         i = nblimbs;
 
-    if( ( p = (mbedtls_mpi_uint*)mbedtls_calloc( i, ciL ) ) == NULL )
+    if( ( p = (mbedtls_mpi_uint*)mbedtls_calloc( i, ciL ) ) == NULL ){
+        printf("\n************** %s:%d %s mbedtls_calloc(%ld, %ld) failed !!!\n", __FILE__, __LINE__, __FUNCTION__, i, ciL);
         return( MBEDTLS_ERR_MPI_ALLOC_FAILED );
+    }
 
     if( X->p != NULL )
     {
