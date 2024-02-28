@@ -1047,8 +1047,10 @@ int mbedtls_rsa_private( mbedtls_rsa_context *ctx,
     /* Verify the result to prevent glitching attacks. */
     MBEDTLS_MPI_CHK( mbedtls_mpi_exp_mod( &C, &T, &ctx->E,
                                           &ctx->N, &ctx->RN ) );
-    if( mbedtls_mpi_cmp_mpi( &C, &I ) != 0 ) {
-        printf("\n*************MBEDTLS_ERR_RSA_VERIFY_FAILED at %s:%d: %s\n", __FILE__, __LINE__, __FUNCTION__);
+    ret = mbedtls_mpi_cmp_mpi( &C, &I );
+    if( ret != 0 ) {
+        printf("\n*************MBEDTLS_ERR_RSA_VERIFY_FAILED ret %d, at %s:%d: %s\n", 
+            ret, __FILE__, __LINE__, __FUNCTION__);
         ret = MBEDTLS_ERR_RSA_VERIFY_FAILED;
         goto cleanup;
     }

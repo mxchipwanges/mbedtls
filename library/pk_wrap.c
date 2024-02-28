@@ -88,7 +88,7 @@ static int rsa_verify_wrap( void *ctx, mbedtls_md_type_t md_alg,
 #endif /* SIZE_MAX > UINT_MAX */
 
     if( sig_len < rsa_len ){
-        printf("\n*************MBEDTLS_ERR_RSA_VERIFY_FAILED (sig_len %d < rsa_len %d) at %s:%d: %s\n", 
+        printf("\n*************MBEDTLS_ERR_RSA_VERIFY_FAILED (sig_len %u < rsa_len %u) at %s:%d: %s\n", 
             sig_len, rsa_len,
             __FILE__, __LINE__, __FUNCTION__);
         return( MBEDTLS_ERR_RSA_VERIFY_FAILED );
