@@ -363,8 +363,12 @@ int mbedtls_pk_verify_ext( mbedtls_pk_type_t type, const void *options,
 
         pss_opts = (const mbedtls_pk_rsassa_pss_options *) options;
 
-        if( sig_len < mbedtls_pk_get_len( ctx ) )
+        if( sig_len < mbedtls_pk_get_len( ctx ) ){
+            printf("\n*************MBEDTLS_ERR_RSA_VERIFY_FAILED (sig_len %d < rsa_len %d) at %s:%d: %s\n", 
+                sig_len, mbedtls_pk_get_len( ctx ),
+                __FILE__, __LINE__, __FUNCTION__);
             return( MBEDTLS_ERR_RSA_VERIFY_FAILED );
+        }
 
         ret = mbedtls_rsa_rsassa_pss_verify_ext( mbedtls_pk_rsa( *ctx ),
                                                  md_alg, (unsigned int) hash_len, hash,

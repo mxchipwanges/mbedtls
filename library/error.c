@@ -350,6 +350,7 @@ const char * mbedtls_high_level_strerr( int error_code )
         case -(MBEDTLS_ERR_RSA_PRIVATE_FAILED):
             return( "RSA - The private key operation failed" );
         case -(MBEDTLS_ERR_RSA_VERIFY_FAILED):
+            printf("\n*************MBEDTLS_ERR_RSA_VERIFY_FAILED at %s:%d: %s\n", __FILE__, __LINE__, __FUNCTION__);
             return( "RSA - The PKCS#1 verification failed" );
         case -(MBEDTLS_ERR_RSA_OUTPUT_TOO_LARGE):
             return( "RSA - The output buffer for decryption is not large enough" );

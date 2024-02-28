@@ -1047,8 +1047,8 @@ int mbedtls_rsa_private( mbedtls_rsa_context *ctx,
     /* Verify the result to prevent glitching attacks. */
     MBEDTLS_MPI_CHK( mbedtls_mpi_exp_mod( &C, &T, &ctx->E,
                                           &ctx->N, &ctx->RN ) );
-    if( mbedtls_mpi_cmp_mpi( &C, &I ) != 0 )
-    {
+    if( mbedtls_mpi_cmp_mpi( &C, &I ) != 0 ) {
+        printf("\n*************MBEDTLS_ERR_RSA_VERIFY_FAILED at %s:%d: %s\n", __FILE__, __LINE__, __FUNCTION__);
         ret = MBEDTLS_ERR_RSA_VERIFY_FAILED;
         goto cleanup;
     }
@@ -1368,6 +1368,7 @@ int mbedtls_rsa_rsaes_oaep_decrypt( mbedtls_rsa_context *ctx,
     /*
      * RSA operation
      */
+    printf("***************** mbedtls_rsa_private called by %s at %s:%d\r\n", __FUNCTION__, __FILE__, __LINE__);
     ret = mbedtls_rsa_private( ctx, f_rng, p_rng, input, buf );
 
     if( ret != 0 )
@@ -1487,6 +1488,7 @@ int mbedtls_rsa_rsaes_pkcs1_v15_decrypt( mbedtls_rsa_context *ctx,
     if( ilen < 16 || ilen > sizeof( buf ) )
         return( MBEDTLS_ERR_RSA_BAD_INPUT_DATA );
 
+    printf("***************** mbedtls_rsa_private called by %s at %s:%d\r\n", __FUNCTION__, __FILE__, __LINE__);
     ret = mbedtls_rsa_private( ctx, f_rng, p_rng, input, buf );
 
     if( ret != 0 )
@@ -1664,6 +1666,7 @@ exit:
     if( ret != 0 )
         return( ret );
 
+    printf("***************** mbedtls_rsa_private called by %s at %s:%d\r\n", __FUNCTION__, __FILE__, __LINE__);
     return mbedtls_rsa_private( ctx, f_rng, p_rng, sig, sig );
 }
 
@@ -1884,6 +1887,8 @@ int mbedtls_rsa_rsassa_pkcs1_v15_sign( mbedtls_rsa_context *ctx,
         return( MBEDTLS_ERR_MPI_ALLOC_FAILED );
     }
 
+    printf("*** sig ctx->len %d\r\n", ctx->len);
+    printf("***************** mbedtls_rsa_private called by %s at %s:%d\r\n", __FUNCTION__, __FILE__, __LINE__);
     MBEDTLS_MPI_CHK( mbedtls_rsa_private( ctx, f_rng, p_rng, sig, sig_try ) );
     MBEDTLS_MPI_CHK( mbedtls_rsa_public( ctx, sig_try, verif ) );
 
@@ -2073,8 +2078,8 @@ int mbedtls_rsa_rsassa_pss_verify_ext( mbedtls_rsa_context *ctx,
     if ( ret != 0 )
         goto exit;
 
-    if( memcmp( hash_start, result, hlen ) != 0 )
-    {
+    if( memcmp( hash_start, result, hlen ) != 0 ) {
+        printf("\n*************MBEDTLS_ERR_RSA_VERIFY_FAILED at %s:%d: %s\n", __FILE__, __LINE__, __FUNCTION__);
         ret = MBEDTLS_ERR_RSA_VERIFY_FAILED;
         goto exit;
     }
@@ -2164,8 +2169,8 @@ int mbedtls_rsa_rsassa_pkcs1_v15_verify( mbedtls_rsa_context *ctx,
      */
 
     if( ( ret = mbedtls_ct_memcmp( encoded, encoded_expected,
-                                              sig_len ) ) != 0 )
-    {
+                                              sig_len ) ) != 0 ) {
+        printf("\n*************MBEDTLS_ERR_RSA_VERIFY_FAILED at %s:%d: %s\n", __FILE__, __LINE__, __FUNCTION__);
         ret = MBEDTLS_ERR_RSA_VERIFY_FAILED;
         goto cleanup;
     }
