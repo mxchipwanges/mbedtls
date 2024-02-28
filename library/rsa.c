@@ -1889,7 +1889,7 @@ int mbedtls_rsa_rsassa_pkcs1_v15_sign( mbedtls_rsa_context *ctx,
         return( MBEDTLS_ERR_MPI_ALLOC_FAILED );
     }
 
-    printf("*** sig ctx->len %d\r\n", ctx->len);
+    printf("*** sig ctx->len %u\r\n", ctx->len);
     printf("***************** mbedtls_rsa_private called by %s at %s:%d\r\n", __FUNCTION__, __FILE__, __LINE__);
     MBEDTLS_MPI_CHK( mbedtls_rsa_private( ctx, f_rng, p_rng, sig, sig_try ) );
     MBEDTLS_MPI_CHK( mbedtls_rsa_public( ctx, sig_try, verif ) );
